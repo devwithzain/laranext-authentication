@@ -21,5 +21,15 @@ export const registerFormSchema = z.object({
   }),
 });
 
+export const profileFormSchema = z.object({
+  name: z.string().min(1, {
+    message: "Name is required",
+  }),
+  email: z.string().email({
+    message: "Email is required",
+  }),
+});
+
 export type TloginFormData = z.infer<typeof loginFormSchema>;
+export type TprofileFormData = z.infer<typeof profileFormSchema>;
 export type TregisterFormData = z.infer<typeof registerFormSchema>;

@@ -29,7 +29,6 @@ class AuthController extends Controller
             'token_type' => 'Bearer'
         ], 200);
     }
-
     public function register(RegisterRequest $request)
     {
 
@@ -53,20 +52,53 @@ class AuthController extends Controller
             'token_type' => 'Bearer'
         ], 201);
     }
-
-
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
 
         return response()->json(['message' => 'Logout successful'], 200);
     }
-
     public function profile(Request $request)
     {
         return response()->json([
             'message' => 'Profile fetched successfully',
             'data' => $request->user()
+        ], 200);
+    }
+    public function updateProfile(Request $request)
+    {
+        $user = $request->user();
+
+        $validatedData = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|email|unique:users,email,' . $user->id, // Only check for unique email excluding current user
+        ]);
+
+        if ($request->has('name')) {
+            $user->name = $validatedData['name'];
+        }
+
+        if ($request->has('email')) {
+            $user->email = $validatedData['email'];
+        }
+
+        $user->save();
+
+        return response()->json([
+            'message' => 'Profile updated successfully',
+            'user' => $user
+        ], 200);
+    }
+    public function deleteAccount(Request $request)
+    {
+        $user = $request->user();
+
+        $user->delete();
+
+        $request->user()->tokens()->delete();
+
+        return response()->json([
+            'success' => 'Account deleted successfully'
         ], 200);
     }
 }
