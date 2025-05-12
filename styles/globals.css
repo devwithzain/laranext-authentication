@@ -1,12 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-body {
-	font-family: GeistMonoVF;
-}
+@import "tailwindcss";
 
 @font-face {
-	src: url("../fonts/GeistMonoVF.woff");
-	font-family: GeistMonoVF;
+	src: url("../fonts/Poppins.ttf");
+	font-family: "Poppins";
+}
+
+body {
+	font-family: "Poppins";
+}
+
+@custom-variant xm (@media (max-width: 519px));
+@custom-variant sm (@media (min-width: 520px) and (max-width: 767px));
+@custom-variant md (@media (min-width: 768px) and (max-width: 999px));
+@custom-variant ml (@media (min-width: 1000px) and (max-width: 1199px));
+@custom-variant lg (@media (min-width: 1200px) and (max-width: 1365px));
+@custom-variant xl (@media (min-width: 1366px) and (max-width: 1599px));
+@custom-variant xxl (@media (min-width: 1600px));
+
+@layer utilities {
+	.padding-x {
+		@apply xxl:px-[80px] lg:px-[40px] md:px-[30px] sm:px-[20px] xm:px-[20px];
+	}
+	.padding-y {
+		@apply xxl:py-[80px] lg:py-[40px] md:py-[30px] sm:py-[20px] xm:py-[20px];
+	}
+	.heading {
+		@apply xxl:text-[80px] lg:text-[60px] md:text-[50px] sm:text-[35px] xm:text-[30px];
+	}
+	.subHeading {
+		@apply xxl:text-[40px] lg:text-[28px] md:text-[22px] sm:text-[18px] xm:text-[18px];
+	}
+	.paragraph {
+		@apply xxl:text-[20px] lg:text-[17px] md:text-[16px] sm:text-[16px] xm:text-[16px];
+	}
+	.subParagraph {
+		@apply xxl:text-[16px] lg:text-[15px] md:text-[15px] sm:text-[14px] xm:text-[14px];
+	}
 }

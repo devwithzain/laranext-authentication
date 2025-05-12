@@ -1,2 +1,1 @@
-export { default as fromImage } from './img.jpg';
-export { default as placeholder } from './placeholder.png';
+export { default as formimg } from './img.jpg';

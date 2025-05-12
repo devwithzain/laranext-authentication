@@ -1,4 +1,9 @@
+export { default as LoginForm } from './login-form';
 export { default as RegisterForm } from './register-form';
-export { default as LoginFrom } from './login-form';
-export { default as UploadImage } from './upload-image';
-export { default as ProfileForm } from './profile-form';
+export { default as Socials } from './socials';
+export { default as Modal } from './modal';
+export { default as AuthModel } from './auth-model';
+export { default as EmailVerify } from './email-verify';
+export { default as ResetEmail } from './reset-email';
+export { default as VerifyResetCode } from './verify-reset-code';
+export { default as NewPassword } from './new-password';
