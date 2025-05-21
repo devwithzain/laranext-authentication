@@ -2,6 +2,7 @@
 import axios from "axios";
 import Image from "next/image";
 import Cookies from "js-cookie";
+import Socials from "./socials";
 import { useState } from "react";
 import { formimg } from "@/public";
 import toast from "react-hot-toast";
@@ -223,6 +224,7 @@ export default function RegisterForm({ onClose }: { onClose: () => void }) {
 								)}
 							</button>
 						</form>
+						<Socials />
 					</div>
 				</div>
 			</div>

@@ -14,6 +14,7 @@ import useRegisterModal from "@/hooks/use-register-modal";
 import { loginFormSchema, TloginFormData } from "@/schemas";
 import { AtSign, Eye, EyeOff, Loader2, Lock, X } from "lucide-react";
 import useEmailCodeSentModal from "@/hooks/use-emailCodeSent-modal";
+import Socials from "./socials";
 
 export default function LoginForm({ onClose }: { onClose: () => void }) {
 	const router = useRouter();
@@ -176,6 +177,7 @@ export default function LoginForm({ onClose }: { onClose: () => void }) {
 								)}
 							</button>
 						</form>
+						<Socials />
 					</div>
 				</div>
 			</div>

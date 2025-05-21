@@ -11,8 +11,10 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -314,5 +316,43 @@ class AuthController extends Controller
         DB::table('email_verification_codes')->where('email', $request->email)->delete();
 
         return response()->json(['success' => 'Email verified successfully.']);
+    }
+    public function redirect($provider)
+    {
+
+        return Socialite::driver($provider)->stateless()->redirect();
+    }
+    public function callback($provider)
+    {
+        try {
+            $socialUser = Socialite::driver($provider)->stateless()->user();
+
+            $user = User::firstOrCreate(
+                ['email' => $socialUser->getEmail()],
+                [
+                    'name' => $socialUser->getName() ?? explode('@', $socialUser->getEmail())[0],
+                    'provider' => $provider,
+                    'provider_id' => $socialUser->getId(),
+                    'password' => Hash::make(Str::random(24)),
+                    'image' => $socialUser->getAvatar(),
+                    'email_verified_at' => now(),
+                ]
+            );
+
+            $user->fill([
+                'provider' => $user->provider ?? $provider,
+                'provider_id' => $user->provider_id ?? $socialUser->getId(),
+                'image' => $user->avatar ?? $socialUser->getAvatar(),
+                'email_verified_at' => $user->email_verified_at ?? now(),
+            ])->save();
+
+            Auth::login($user);
+
+            $token = $user->createToken("{$provider}-token")->plainTextToken;
+
+            return redirect(env('FRONTEND_URL') . '/oauth-callback?token=' . $token);
+        } catch (\Exception $e) {
+            return redirect(env('FRONTEND_URL') . '/?error=oauth_failed');
+        }
     }
 }

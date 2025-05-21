@@ -16,6 +16,9 @@ export type TuserProps = {
    email: string;
    image: string | null;
    role: string;
+   provider?: string;
+   provider_id?: string;
+   email_verified_at?: string;
    created_at: Date | null;
    updated_at: Date | null;
 };

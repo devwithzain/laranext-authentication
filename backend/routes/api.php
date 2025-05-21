@@ -23,3 +23,6 @@ Route::post('/email/send-code', [AuthController::class, 'sendEmailVerificationCo
 Route::post('/reset-password', [AuthController::class, 'resetPassword']);
 Route::post('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::post('/verify-reset-code', [AuthController::class, 'verifyResetCode']);
+
+Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirect']);
+Route::get('/auth/callback/{provider}', [AuthController::class, 'callback']);
